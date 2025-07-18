@@ -1,0 +1,26 @@
+---
+apiVersion: user.keycloak.crossplane.io/v1alpha1
+kind: User
+metadata:
+  name: leafcloud-user-admin
+spec:
+  forProvider:
+    realmId: azimuth-users
+    username: tenancy-admin
+    email: CloudsClear@proton
+  providerConfigRef:
+    name: keycloak-config
+---
+apiVersion: user.keycloak.crossplane.io/v1alpha1
+kind: Groups
+metadata:
+  name: leafcloud-user-admin-group-mapping
+spec:
+  forProvider:
+    realmId: azimuth-users
+    userIdRef:
+      name: leafcloud-user-admin
+    groupIdsRefs:
+      - name: leafcloud-user
+  providerConfigRef:
+    name: keycloak-config

@@ -1,0 +1,39 @@
+---
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Flow
+metadata:
+  name: map-users-flow-leafcloud-user
+spec:
+  forProvider:
+    alias: map-users-flow-leafcloud-user
+    realmId: az-leafcloud-user
+  providerConfigRef:
+    name: keycloak-config
+---
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: existing-broker-user-execution-leafcloud-user
+spec:
+  forProvider:
+    parentFlowAlias: map-users-flow-leafcloud-user
+    realmId: az-leafcloud-user
+    authenticator: idp-detect-existing-broker-user
+    requirement: REQUIRED
+    priority: 0
+  providerConfigRef:
+    name: keycloak-config
+---
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: autolink-execution-leafcloud-user
+spec:
+  forProvider:
+    parentFlowAlias: map-users-flow-leafcloud-user
+    realmId: az-leafcloud-user
+    authenticator: idp-auto-link
+    requirement: REQUIRED
+    priority: 1
+  providerConfigRef:
+    name: keycloak-config

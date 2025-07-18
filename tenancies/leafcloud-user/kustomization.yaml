@@ -1,0 +1,8 @@
+---
+
+resources:
+  - namespace.yaml
+  - kubeconfig-secret-sealed.yaml
+  - group.yaml
+  - flow.yaml
+  - user.yaml
